@@ -1,18 +1,18 @@
 # 加载 Time::HiRes 模块
-use Time::HiRes qw(gettimeofday tv_interval);
-use POSIX qw(floor);
+#use Time::HiRes qw(gettimeofday tv_interval);
+#use POSIX qw(floor);
 
 # 记录开始时间
-my $start_time = [gettimeofday];
+#my $start_time = [gettimeofday];
 
 # 设置 pdflatex,xelatex,bibtex,biber 选项执行的命令
 # %O, %S 是占位符;
 # %O 代表选项，%S 代表对应命令的源文件
-$pdflatex = "pdflatex -shell-escape -file-line-error -halt-on-error -interaction=nonstopmode -synctex=1 %O %S";
-$xelatex = "xelatex -shell-escape -file-line-error -halt-on-error -interaction=batchmode -no-pdf -synctex=1 %O %S";
-$lualatex = "lualatex -shell-escape -file-line-error -halt-on-error -interaction=nonstopmode -synctex=1 %O %S";
+#$pdflatex = "pdflatex -shell-escape -file-line-error -halt-on-error -interaction=nonstopmode -synctex=1 %O %S";
+$xelatex = "xelatex -shell-escape -file-line-error -halt-on-error -interaction=batchmode -no-pdf -synctex=0 %O %S";
+#$lualatex = "lualatex -shell-escape -file-line-error -halt-on-error -interaction=nonstopmode -synctex=1 %O %S";
 
-$recorder = 1;
+#$recorder = 1;
 
 # 设置pdf生成模式，有 0 1 2 3 4 5
 # 0 代表不生成 pdf
@@ -23,31 +23,31 @@ $recorder = 1;
 # 5 代表使用 $xelatex，在系统 RC 文件已经设置
 $pdf_mode = 5;
 
-$bibtex = "bibtex %O %S";
-$biber = "biber %O %S";
+#$bibtex = "bibtex %O %S";
+#$biber = "biber %O %S";
 
 $xdvipdfmx = "xdvipdfmx -E -o %D %O %S";
 
 # 编译索引
-$makeindex = "makeindex -s gind.ist %O -o %D %S";
+#$makeindex = "makeindex -s gind.ist %O -o %D %S";
 
 # 用glossaries做索引，所需要的额外编译
-add_cus_dep('glo', 'gls', 0, 'glo2gls');
-sub glo2gls {
-    system("makeindex -s gglo.ist -o \"$_[0].gls\" \"$_[0].glo\"");
-}
-push @generated_exts, "glo", "gls";
+#add_cus_dep('glo', 'gls', 0, 'glo2gls');
+#sub glo2gls {
+    #system("makeindex -s gglo.ist -o \"$_[0].gls\" \"$_[0].glo\"");
+#}
+#push @generated_exts, "glo", "gls";
 
 # 用nomencl做索引，所需要的额外编译
-add_cus_dep('nlo', 'nls', 0, 'nlo2nls');
-sub nlo2nls {
-    system("makeindex -s nomencl.ist -o \"$_[0].nls\" \"$_[0].nlo\"");
-}
-push @generated_exts, "nlo", "nls";
+#add_cus_dep('nlo', 'nls', 0, 'nlo2nls');
+#sub nlo2nls {
+    #system("makeindex -s nomencl.ist -o \"$_[0].nls\" \"$_[0].nlo\"");
+#}
+#push @generated_exts, "nlo", "nls";
 
 # 执行 latexmk -c 或 latexmk -C 时会清空 latex 程序生成的文件（-C 更强，会清空pdf）
 # 除此之外, 可以设置额外的文件拓展，以进行清空
-$clean_ext = "blg idx ind lof lot out toc acn acr alg glg glo gls ist fls log spl dtx nlo nls ilg glsdefs fdb_latexmk synctex synctex.gz spl";
+#$clean_ext = "blg idx ind lof lot out toc acn acr alg glg glo gls ist fls log spl dtx nlo nls ilg glsdefs fdb_latexmk synctex synctex.gz spl";
 
 # ================================================================================
 # 编译结束后要执行的命令
