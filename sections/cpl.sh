@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-num="26"
+num="27"
 
 ls /mnt/hgfs/Desktop/"$num"_*.jpg
 if [[ $? -eq 0 ]] ; then
